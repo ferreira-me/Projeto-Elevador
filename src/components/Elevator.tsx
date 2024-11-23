@@ -9,27 +9,41 @@ const Elevator: React.FC = () => {
 
   useEffect(() => {
     moveElevator(); // Inicia o movimento quando a fila muda
-  }, [elevator.queue.length, elevator.moving]);
+  }, [elevator.queue.length, elevator.moving, moveElevator]);
 
   return (
-    <div className="elevator-container">
-      <div
-        className="elevator"
-        style={{
-          transform: `translateY(-${elevator.currentFloor * 100}px)`, // Animação de movimento
-        }}
-      ></div>
+    <>
+      <div className="alinhar">
 
-      <div className="button-container">
-        {floors.map((floor) => (
-          <Button key={floor} floor={floor} onClick={addToQueue} />
-        ))}
+        <div className="button-container">
+          <div className="alinharbotao">
+            {floors.map((floor) => (
+              <Button key={floor} floor={floor} onClick={addToQueue} />
+            ))}
+          </div>
+        </div>
+
+        
+
+
+        <div className="elevator-container">
+          <div
+            className="elevator"
+            style={{
+              transform: `translateY(-${elevator.currentFloor * 126 +4}px)`,
+            }}
+          ></div>
+        </div>
+
+        <div className="block-floor">
+          <p>Andar atual: {elevator.currentFloor}</p>
+          <p>Fila de andares: {elevator.queue.join(", ") || "Vazia"}</p>
+          {elevator.moving && <p>Elevador em movimento...</p>}
+        </div>
+
+
       </div>
-
-      <p>Andar atual: {elevator.currentFloor}</p>
-      <p>Fila de andares: {elevator.queue.join(", ") || "Vazia"}</p>
-      {elevator.moving && <p>Elevador em movimento...</p>}
-    </div>
+    </>
   );
 };
 

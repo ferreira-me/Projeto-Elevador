@@ -1,5 +1,5 @@
-// src/components/Button.tsx
 import React from "react";
+
 
 interface ButtonProps {
   floor: number;
@@ -8,10 +8,12 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ floor, onClick }) => {
   return (
-    <button className="button" onClick={() => onClick(floor)}>
-      Andar {floor}
-    </button>
-  ); 
+  
+      <button className="button" onClick={() => onClick(floor)}>
+        Andar {floor}
+      </button>
+
+  );
 };
 
 export default Button;
