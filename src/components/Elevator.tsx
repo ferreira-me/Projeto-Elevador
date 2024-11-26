@@ -11,6 +11,8 @@ const Elevator: React.FC = () => {
     moveElevator(); // Inicia o movimento quando a fila muda
   }, [elevator.queue.length, elevator.moving, moveElevator]);
 
+  console.log(elevator)
+
   return (
     <>
       <div className="alinhar">
@@ -30,7 +32,10 @@ const Elevator: React.FC = () => {
           <div
             className="elevator"
             style={{
-              transform: `translateY(-${elevator.currentFloor * 126 +4}px)`,
+              transform: `translateY(-${elevator.currentFloor * 126 + 4}px)`,
+              backgroundImage: elevator.moving
+                ? "url('/doorclose.jpg')" // Referência relativa correta
+                : "url('/dooropen.jpg')", // Referência relativa correta
             }}
           ></div>
         </div>
