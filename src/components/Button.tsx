@@ -1,6 +1,5 @@
 import React from "react";
 
-
 interface ButtonProps {
   floor: number;
   onClick: (floor: number) => void;

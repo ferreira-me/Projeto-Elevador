@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
-
-type Elevator = {
-  currentFloor: number;
-  queue: number[];
-  direction: "up" | "down" | null;
-  moving: boolean;
-};
+import { Queue, MyNode } from "../utils/queue"; // Importa a classe Queue
+import { Elevator } from "../types/elevatorTypes";
 
 const useElevator = () => {
   const [elevator, setElevator] = useState<Elevator>({
@@ -13,6 +8,8 @@ const useElevator = () => {
     queue: [],
     direction: null,
     moving: false,
+    paused: false,
+    onTargetFloor: false,
   });
 
   // Adiciona um andar à fila
@@ -34,7 +31,7 @@ const useElevator = () => {
 
   // Move o elevador
   const moveElevator = () => {
-    if (elevator.queue.length === 0 || elevator.moving) return;
+    if (elevator.queue.length === 0 || elevator.moving || elevator.paused) return;
 
     const nextFloor = elevator.queue[0]; // Pega o próximo andar
     const direction = nextFloor > elevator.currentFloor ? "up" : "down";
@@ -43,26 +40,35 @@ const useElevator = () => {
       ...prev,
       direction,
       moving: true,
+      onTargetFloor: false, // Reset ao começar o movimento
     }));
   };
 
   // Efeito que controla o movimento do elevador
   useEffect(() => {
-    if (!elevator.moving) return;
+    if (!elevator.moving || elevator.paused) return;
 
     const interval = setInterval(() => {
       const nextFloor = elevator.queue[0];
 
       if (elevator.currentFloor === nextFloor) {
-        // Chegou ao andar, faz pausa de 4 segundos
+        // Chegou ao andar, entra em pausa
+        setElevator((prev) => ({
+          ...prev,
+          paused: true, // Marca como pausado
+          onTargetFloor: true, // Está no andar alvo
+        }));
+
         setTimeout(() => {
           setElevator((prev) => ({
             ...prev,
             queue: prev.queue.slice(1), // Remove o andar visitado
             moving: false, // Para o movimento
             direction: null, // Reseta a direção
+            paused: false, // Sai do estado de pausa
+            onTargetFloor: false, // Reset após pausa
           }));
-        }, 4000); // Pausa de 4 segundos
+        }, 3000); // Pausa de 3 segundos
 
         clearInterval(interval); // Para o movimento ao alcançar o andar
       } else {
