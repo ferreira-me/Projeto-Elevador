@@ -36,7 +36,6 @@ const Elevator: React.FC = () => {
                 ? "url('/dooropen.jpg')" // Porta aberta quando parado ou no alvo
                 : "url('/doorclose.jpg')", // Porta fechada em movimento ou fora do alvo
           }}
-          
         ></div>
       </div>
 
