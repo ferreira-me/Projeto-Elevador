@@ -5,7 +5,8 @@ import Elevator from "./components/Elevator";
 const App: React.FC = () => {
   return (
     <div>
-      <h1 className="elevator-title">Elevador Inteligente</h1>
+      <h1 className="elevator-title">Elevador</h1>
+      <div className="underline"></div>
       <Elevator />
     </div>
   );
